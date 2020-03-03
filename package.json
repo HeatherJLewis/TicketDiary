@@ -1,12 +1,12 @@
 {
-  "name": "BasicExpressApp",
+  "name": "TicketDiary",
   "version": "1.0.0",
   "description": "BasicExpressApp",
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node server/index",
-    "dev": "nodemon server/script"
+    "start": "node src/script",
+    "dev": "nodemon src/script"
   },
   "repository": {
     "type": "git",

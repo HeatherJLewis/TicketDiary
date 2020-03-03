@@ -11,7 +11,6 @@ var connection = mysql.createConnection({
 app.set('view engine', 'pug');
 
 connection.connect(function(error) {
-  //callback
   if (error) {
     console.log('Error');
   } else {
@@ -24,9 +23,9 @@ app.get('/', function(request, response) {
     if (error) {
       console.log('Error in the query');
     } else {
-      response.render('index', { title: 'Beans', message: results[0].name });
+      response.render('index', { title: 'Beans', message: results[1].name });
       console.log('Success');
-      console.log(results[0].name);
+      console.log(results[1].name);
     }
   });
 });

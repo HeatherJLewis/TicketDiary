@@ -1,11 +1,13 @@
-const getSpy = jest.fn();
+import { router } from '../src/routes';
+
+const useSpy = jest.fn();
 const listenSpy = jest.fn();
 
 describe('should test server configuration', () => {
   beforeEach(() => {
     jest.doMock('express', () => {
       return () => ({
-        get: getSpy,
+        use: useSpy,
         listen: listenSpy
       });
     });
@@ -13,7 +15,7 @@ describe('should test server configuration', () => {
 
   test('should call get fn', () => {
     require('../src/index.js');
-    expect(getSpy).toHaveBeenCalled();
+    expect(useSpy).toHaveBeenCalledWith(router);
   });
 
   test('should call listen fn', () => {

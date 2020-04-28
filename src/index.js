@@ -1,9 +1,11 @@
 import express from 'express';
+import { router } from './routes';
 
 let app = express();
+let port = 3000;
 
-app.get('/', (req, res) => res.send('Hello Bob'));
+app.use(router);
 
-app.listen(3000, () => {
-  console.log('Running');
+app.listen(port, () => {
+  console.log(`Running on port: ${port}`);
 });

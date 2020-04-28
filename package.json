@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node src/script",
-    "dev": "nodemon src/script"
+    "start": "node -r esm src/index.js",
+    "dev": "nodemon -r esm src/script.js"
   },
   "repository": {
     "type": "git",
@@ -16,12 +16,10 @@
   "license": "MIT",
   "homepage": "https://github.com/HeatherJLewis/ticketDiary#readme",
   "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/node": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/register": "^7.0.0",
-    "babel-loader": "^8.0.2",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.6",
+    "@babel/node": "^7.8.4",
+    "@babel/preset-env": "^7.8.6",
     "eslint": "^6.8.0",
     "eslint-loader": "^3.0.3",
     "husky": "^4.2.1",
@@ -50,6 +48,7 @@
   },
   "dependencies": {
     "body-parser": "^1.19.0",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
     "mysql": "^2.17.1",
     "pug": "^2.0.4",

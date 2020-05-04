@@ -1,6 +1,8 @@
 import express from 'express';
 import { createServer, startServer } from '../src/server';
 
+const fakePort = 1234;
+
 jest.mock('express', () => {
   const express = {
     get: jest.fn(),
@@ -20,10 +22,10 @@ describe('server.js', () => {
     });
   });
   describe('startServer', () => {
-    test('should call listen', () => {
-      startServer();
+    test('should call listen with value ', () => {
+      startServer(fakePort);
 
-      expect(fakeApp.listen).toHaveBeenCalled();
+      expect(fakeApp.listen).toHaveBeenCalledWith(fakePort);
     });
   });
 });

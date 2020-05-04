@@ -1,11 +1,7 @@
-import express from 'express';
-import { router } from './routes';
+import { createServer, startServer } from './server';
 
-let app = express();
-let port = 3000;
+const port = 3000;
 
-app.use(router);
+createServer();
 
-app.listen(port, () => {
-  console.log(`Running on port: ${port}`);
-});
+startServer(port);

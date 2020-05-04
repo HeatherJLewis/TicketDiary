@@ -1,9 +1,10 @@
 import express from 'express';
-import { createServer } from '../src/server';
+import { createServer, startServer } from '../src/server';
 
 jest.mock('express', () => {
   const express = {
-    get: jest.fn()
+    get: jest.fn(),
+    listen: jest.fn()
   };
   return jest.fn(() => express);
 });
@@ -16,6 +17,13 @@ describe('server.js', () => {
       createServer();
 
       expect(fakeApp.get).toHaveBeenCalled();
+    });
+  });
+  describe('startServer', () => {
+    test('should call listen', () => {
+      startServer();
+
+      expect(fakeApp.listen).toHaveBeenCalled();
     });
   });
 });

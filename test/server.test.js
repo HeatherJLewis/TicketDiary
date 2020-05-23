@@ -6,11 +6,13 @@ jest.mock('express');
 jest.mock('../src/routes');
 
 describe('server.js', () => {
+	const mockExpressSet = jest.fn();
 	const mockExpressUse = jest.fn();
 	const mockExpressListen = jest.fn();
 	const mockRouter = {};
 
 	const fakeExpress = {
+		set: mockExpressSet,
 		use: mockExpressUse,
 		listen: mockExpressListen
 	};
@@ -34,7 +36,19 @@ describe('server.js', () => {
 			expect(express).toHaveBeenCalled();
 		});
 
-		it('should call app.use with initialiseRoutes', () => {
+		it('should set the expected view engine', () => {
+			createServer();
+
+			expect(fakeExpress.set).toHaveBeenCalledWith('view engine', 'pug');
+		});
+
+		it('should set the expected views directory', () => {
+			createServer();
+
+			expect(fakeExpress.set).toHaveBeenCalledWith('views', './src/views');
+		});
+
+		it('should call express application with the router', () => {
 			createServer();
 
 			expect(fakeExpress.use).toHaveBeenCalledWith(mockRouter);
@@ -48,7 +62,7 @@ describe('server.js', () => {
 	});
 
 	describe('startServer', () => {
-		it('should call listen with port value', () => {
+		it('should call app.listen with given port value', () => {
 			const givenPort = 1234;
 
 			startServer(fakeExpress, givenPort);

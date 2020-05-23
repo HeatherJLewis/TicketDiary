@@ -9,8 +9,9 @@ const createServer = () => {
 };
 
 const startServer = (app, port) => {
-	app.listen(port);
-	console.log(`Running on port: ${port}`); // this isn't right, it should be a callback passed into app.listen - check app.listen
+	app.listen(port, () =>
+		console.log(`App listening at http://localhost:${port}`)
+	);
 };
 
 export { createServer, startServer };

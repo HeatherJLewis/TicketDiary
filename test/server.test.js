@@ -1,42 +1,33 @@
 import express from 'express';
-import { createServer } from '../src/server';
+import { createServer, startServer } from '../src/server';
 import { initialiseRoutes } from '../src/routes';
 
-////////
-// TODO: tidy this up, move setup into a before each and make sure you restore mocks in the after each
-////////
-
-jest.mock('express'); // mocking the express module - hoist
-jest.mock('../src/routes'); // mocks the module coming from this location
+jest.mock('express');
+jest.mock('../src/routes');
 
 describe('server.js', () => {
-	const mockExpressUse = jest.fn(); // mocking the express.use function
-	const mockExpressGet = jest.fn(); // mocking the express.get function
+	const mockExpressUse = jest.fn();
+	const mockExpressListen = jest.fn();
 	const mockRouter = {};
 
 	const fakeExpress = {
-		// creating a fake Express object with a fake use and get method
 		use: mockExpressUse,
-		get: mockExpressGet
+		listen: mockExpressListen
 	};
 
-	// const fakeRouter = { // creating a fake router with the fake get method
-	//   get: mockExpressGet,
-	// };
+	beforeEach(() => {
+		initialiseRoutes.mockImplementation(() => mockRouter);
+
+		express.mockImplementation(() => {
+			return fakeExpress;
+		});
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
 
 	describe('createServer', () => {
-		beforeEach(() => {
-			initialiseRoutes.mockImplementation(() => mockRouter);
-
-			express.mockImplementation(() => {
-				return fakeExpress;
-			});
-		});
-
-		afterEach(() => {
-			jest.restoreAllMocks();
-		});
-
 		it('should create an Express server', () => {
 			createServer();
 
@@ -56,23 +47,16 @@ describe('server.js', () => {
 		});
 	});
 
-	// describe('startServer', () => {
-	//   beforeEach(() => {
+	describe('startServer', () => {
+		it('should call listen with port value', () => {
+			const givenPort = 1234;
 
-	//   });
+			startServer(fakeExpress, givenPort);
 
-	//   afterEach(() => {
-
-	//   });
-
-	//     it('should call listen with value ', () => {
-	//       startServer(fakePort);
-
-	//       expect(fakeApp.listen).toHaveBeenCalledWith(fakePort);
-	//     });
-
-	//     it('should ', () => {
-
-	//     });
-	// });
+			expect(fakeExpress.listen).toHaveBeenCalledWith(
+				givenPort,
+				expect.any(Function)
+			);
+		});
+	});
 });

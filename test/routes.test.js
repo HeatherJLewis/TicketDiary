@@ -5,14 +5,23 @@ jest.mock('express');
 
 describe('routes.js', () => {
 	const mockRouter = jest.fn();
+	const mockGet = jest.fn();
 
 	const fakeExpress = {
 		Router: mockRouter
 	};
 
+	const fakeRouter = {
+		get: mockGet
+	};
+
 	beforeEach(() => {
 		express.mockImplementation(() => {
 			return fakeExpress;
+		});
+
+		express.Router.mockImplementation(() => {
+			return fakeRouter;
 		});
 	});
 
@@ -26,9 +35,15 @@ describe('routes.js', () => {
 		expect(express.Router).toHaveBeenCalled();
 	});
 
-	it.only('should create an Express router which calls get', () => {
+	it('should create an Express router which calls get', () => {
 		initialiseRoutes();
 
-		expect(express.Router).toHaveBeenCalled();
+		expect(fakeRouter.get).toHaveBeenCalled();
+	});
+
+	it('should return router', () => {
+		const router = initialiseRoutes();
+
+		expect(router).toEqual(fakeRouter);
 	});
 });

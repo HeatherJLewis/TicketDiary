@@ -2,6 +2,6 @@ import { createServer, startServer } from './server';
 
 const port = 3000;
 
-createServer();
+const app = createServer();
 
-startServer(port);
+startServer(app, port);

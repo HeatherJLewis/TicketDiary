@@ -1,25 +1,25 @@
 import { router } from '../src/routes';
 
-const useSpy = jest.fn();
-const listenSpy = jest.fn();
+const mockUse = jest.fn();
+const mockListen = jest.fn();
 
-describe('should test server configuration', () => {
-  beforeEach(() => {
-    jest.doMock('express', () => {
-      return () => ({
-        use: useSpy,
-        listen: listenSpy
-      });
-    });
-  });
+describe('Express server in index.js', () => {
+	beforeEach(() => {
+		jest.doMock('express', () => {
+			return () => ({
+				use: mockUse,
+				listen: mockListen
+			});
+		});
+	});
 
-  test('should call get fn', () => {
-    require('../src/index.js');
-    expect(useSpy).toHaveBeenCalledWith(router);
-  });
+	it.only('should call use', () => {
+		require('../src/index.js');
+		expect(mockUse).toHaveBeenCalledWith(router);
+	});
 
-  test('should call listen fn', () => {
-    require('../src/index.js');
-    expect(listenSpy).toHaveBeenCalled();
-  });
+	it('should call listen', () => {
+		require('../src/index.js');
+		expect(mockListen).toHaveBeenCalled();
+	});
 });

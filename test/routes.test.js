@@ -1,8 +1,34 @@
-// import { initialiseRoutes } from '../src/routes'
+import express from 'express';
+import { initialiseRoutes } from '../src/routes';
 
-// describe('should test router', () => {
-//   require('../src/routes.js');
-//   test('should test get POSTS', () => {
-//     expect(getSpy).toHaveBeenCalled();
-//   });
-// });
+jest.mock('express');
+
+describe('routes.js', () => {
+	const mockRouter = jest.fn();
+
+	const fakeExpress = {
+		Router: mockRouter
+	};
+
+	beforeEach(() => {
+		express.mockImplementation(() => {
+			return fakeExpress;
+		});
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
+
+	it('should create an Express router', () => {
+		initialiseRoutes();
+
+		expect(express.Router).toHaveBeenCalled();
+	});
+
+	it.only('should create an Express router which calls get', () => {
+		initialiseRoutes();
+
+		expect(express.Router).toHaveBeenCalled();
+	});
+});

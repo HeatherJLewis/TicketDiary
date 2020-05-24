@@ -3,6 +3,7 @@
 Do I need to test each get route?
 Do I need to test the index.js file?
 What's the difference between app.use and router.use?
+When would you use a default export and a named export?
 
 # _To Do_
 

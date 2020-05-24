@@ -4,24 +4,15 @@ import { createDatabaseConnection } from '../src/databaseConnection';
 jest.mock('mysql');
 
 describe('databaseConnection', () => {
-	const mockCreateConnection = jest.fn();
 	const mockConnect = jest.fn();
 
-	const fakeMysql = {
-		createConnection: mockCreateConnection
-	};
-
-	const fakeCreateConnection = {
+	const fakeConnection = {
 		connect: mockConnect
 	};
 
 	beforeEach(() => {
-		mysql.mockImplementation(() => {
-			return fakeMysql;
-		});
-
 		mysql.createConnection.mockImplementation(() => {
-			return fakeCreateConnection;
+			return fakeConnection;
 		});
 	});
 
@@ -29,9 +20,21 @@ describe('databaseConnection', () => {
 		jest.restoreAllMocks();
 	});
 
-	it('should create a database connection', () => {
+	it('should create a database connection instance', () => {
 		createDatabaseConnection();
 
 		expect(mysql.createConnection).toHaveBeenCalled();
+	});
+
+	it('should connect to the database', () => {
+		createDatabaseConnection();
+
+		expect(fakeConnection.connect).toHaveBeenCalled();
+	});
+
+	it('should return connection', () => {
+		let connection = createDatabaseConnection();
+
+		expect(connection).toEqual(fakeConnection);
 	});
 });

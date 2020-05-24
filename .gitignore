@@ -61,4 +61,4 @@ typings/
 .next
 
 # database connection secrets
-.databaseConnectionSecrets.js
+databaseSecrets.js

@@ -3,6 +3,10 @@ import { initialiseRoutes } from './routes';
 
 const createServer = () => {
 	const app = express();
+
+	app.set('views', './src/views');
+	app.set('view engine', 'pug');
+
 	app.use(initialiseRoutes());
 
 	return app;

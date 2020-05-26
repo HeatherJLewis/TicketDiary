@@ -1,11 +1,12 @@
 import express from 'express';
-import renderIndexPage from './middleware/renderIndexPage.js';
+import renderIndexPage from './middleware/renderIndexPage';
+import renderDatabaseResults from './middleware/renderDatabaseResults';
 
 const initialiseRoutes = () => {
 	const router = express.Router();
 
 	router.get('/', renderIndexPage);
-	router.get('/homePage', (request, response) => response.send('HomePage'));
+	router.get('/database', renderDatabaseResults);
 	router.get('/heather', (request, response) => response.send('Heather'));
 
 	return router;
